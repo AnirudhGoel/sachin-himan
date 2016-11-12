@@ -26,8 +26,17 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:background="@color/background_floating_material_dark"
-            android:text="Send MSG"
+            android:text="ASK"
             android:textColor="@color/background_material_light"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/mic"
+            android:src="@drawable/mic"
+            android:layout_toLeftOf="@id/chatSendButton"
+            android:layout_toRightOf="@id/messageEdit"
+            />
 
         <ListView
             android:id="@+id/messagesContainer"

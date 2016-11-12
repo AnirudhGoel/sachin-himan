@@ -1,10 +1,11 @@
 package com.codingblocks.customnavigationdrawer.ChatbotFiles;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.ExpandedMenuView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +13,11 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.codingblocks.customnavigationdrawer.Networking.ApiClientChatbot;
 import com.codingblocks.customnavigationdrawer.R;
@@ -25,6 +28,7 @@ import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,11 +37,13 @@ import retrofit2.Response;
 
 public class ChatActivity extends AppCompatActivity {
 
+    private static final int REQ_CODE_SPEECH_INPUT = 100 ;
     private EditText messageET;
     private ListView messagesContainer;
     private Button sendBtn;
     private ChatAdapter adapter;
     private ArrayList<ChatMessage> chatHistory;
+    private ImageButton mic_button;
 
     CatLoadingView mView;
     @Override
@@ -55,12 +61,15 @@ public class ChatActivity extends AppCompatActivity {
         messagesContainer = (ListView) findViewById(R.id.messagesContainer);
         messageET = (EditText) findViewById(R.id.messageEdit);
         sendBtn = (Button) findViewById(R.id.chatSendButton);
-
-
-        RelativeLayout container = (RelativeLayout) findViewById(R.id.container);
-
+        mic_button=(ImageButton) findViewById(R.id.mic);
         loadDummyHistory();
 
+        mic_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput();
+            }
+        });
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +106,41 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
-//this mehtod will call api link and return String...this will run on worker thread...whle this is happening show progress dialog.after this is finished call
+
+
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Speek");
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),
+                    "Speech Not Supported",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    messageET.setText(result.get(0));
+                }
+                break;
+            }
+
+        }
+    }
+
+    //this mehtod will call api link and return String...this will run on worker thread...whle this is happening show progress dialog.after this is finished call
     private void networkcall(String message) {
         String text_result="";
         //by network call take the sstring
