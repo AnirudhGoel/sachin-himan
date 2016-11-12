@@ -4,7 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.codingblocks.customnavigationdrawer.MainActivity;
+import com.codingblocks.customnavigationdrawer.ChatbotFiles.ChatActivity;
+
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -12,7 +13,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        Intent intent = new Intent(this, MainScreen.class);
+        Intent intent = new Intent(this, ChatActivity.class);
         startActivity(intent);
         finish();
     }

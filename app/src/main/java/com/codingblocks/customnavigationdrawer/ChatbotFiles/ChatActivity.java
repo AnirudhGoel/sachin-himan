@@ -4,22 +4,23 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.ExpandedMenuView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.codingblocks.customnavigationdrawer.ApiInterface;
 import com.codingblocks.customnavigationdrawer.Networking.ApiClientChatbot;
 import com.codingblocks.customnavigationdrawer.R;
 import com.roger.catloadinglibrary.CatLoadingView;
 import com.squareup.picasso.Picasso;
+
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -55,10 +56,9 @@ public class ChatActivity extends AppCompatActivity {
         messageET = (EditText) findViewById(R.id.messageEdit);
         sendBtn = (Button) findViewById(R.id.chatSendButton);
 
-        //TextView meLabel = (TextView) findViewById(R.id.meLbl);
-       // TextView companionLabel = (TextView) findViewById(R.id.friendLabel);
+
         RelativeLayout container = (RelativeLayout) findViewById(R.id.container);
-        //companionLabel.setText("My Buddy");// Hard Coded
+
         loadDummyHistory();
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -79,14 +79,20 @@ public class ChatActivity extends AppCompatActivity {
 
                 displayMessage(chatMessage);
                 networkcall(chatMessage.getMessage());
-                //to actually display..sending chat mnessage
-//                String server_text=networkcall(chatMessage.getMessage());
-//                ChatMessage chatMessagereply = new ChatMessage();
-//                chatMessage.setId(122);
-//                chatMessage.setMessage(server_text);
-//                chatMessage.setDate(DateFormat.getDateTimeInstance().format(new Date()));
-//                chatMessage.setMe(true);
-                //displayMessage(chatMessage);
+
+            }
+        });
+        messagesContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(adapter.getItem(position).getMessage().contains("Let me Google that for you"))
+                {
+                    String url=adapter.getItem(position).geturl();
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                }
+
 
             }
         });
@@ -127,6 +133,8 @@ public class ChatActivity extends AppCompatActivity {
         scroll();
     }
 
+
+
     private void scroll() {
         messagesContainer.setSelection(messagesContainer.getCount() - 1);
     }
@@ -159,7 +167,7 @@ public class ChatActivity extends AppCompatActivity {
     public void set_server_message(String text)
     {
         mView.dismiss();
-        if(text.substring(text.length()-3).equals("vid") && text.contains("youtube"))
+        if(text.contains("youtube.com"))
         {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(text));
             startActivity(intent);
@@ -176,10 +184,24 @@ public class ChatActivity extends AppCompatActivity {
         }
         else
         {
-
             ChatMessage msg = new ChatMessage();
             msg.setId(1);
             msg.setMe(true);
+            if(text.contains("Let me Google that for you"))
+            { String url=text.substring(29);
+            msg.setMessage("Let me Google that for you - Click here");
+                msg.seturl(url);
+            }
+            else if("<a href=".equals(text.substring(0,8)))
+            {
+                int index1=text.indexOf(">");
+                int index2=text.lastIndexOf(">");
+                int i3=text.lastIndexOf("</a");
+                Log.e("index",text+" "+index1+" "+index2+" "+i3);
+                String ans=text.substring(index1+1,i3)+text.substring(index2+1);
+                msg.setMessage(""+ans);
+            }
+            else
             msg.setMessage(text);
             msg.setDate(DateFormat.getDateTimeInstance().format(new Date()));
             displayMessage(msg); // might have to add in a Arraylist as well
