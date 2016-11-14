@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.codingblocks.customnavigationdrawer.GamePart.GameInitActivity;
 import com.codingblocks.customnavigationdrawer.Networking.ApiClientChatbot;
 import com.codingblocks.customnavigationdrawer.R;
 import com.roger.catloadinglibrary.CatLoadingView;
@@ -43,7 +44,7 @@ public class ChatActivity extends AppCompatActivity {
     private Button sendBtn;
     private ChatAdapter adapter;
     private ArrayList<ChatMessage> chatHistory;
-    private ImageButton mic_button;
+    private ImageView mic_button;
 
     CatLoadingView mView;
     @Override
@@ -61,7 +62,7 @@ public class ChatActivity extends AppCompatActivity {
         messagesContainer = (ListView) findViewById(R.id.messagesContainer);
         messageET = (EditText) findViewById(R.id.messageEdit);
         sendBtn = (Button) findViewById(R.id.chatSendButton);
-        mic_button=(ImageButton) findViewById(R.id.mic);
+        mic_button=(ImageView) findViewById(R.id.mic);
         loadDummyHistory();
 
         mic_button.setOnClickListener(new View.OnClickListener() {
@@ -155,15 +156,16 @@ public class ChatActivity extends AppCompatActivity {
                 if(response.isSuccessful())
                 set_server_message(response.body().result.toString());
                 else
-                    Log.e("sachin","not succ");
+                    Toast.makeText(ChatActivity.this,"Intenet not Connected",Toast.LENGTH_LONG).show();
                 mView.dismiss();
             }
 
             @Override
             public void onFailure(Call<Question> call, Throwable t) {
 
+                Toast.makeText(ChatActivity.this,"Sorry Unexpected problem occured",Toast.LENGTH_LONG).show();
                 mView.dismiss();
-                Log.e("sachin","fail",t);
+
 
             }
         });
@@ -215,7 +217,7 @@ public class ChatActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(text));
             startActivity(intent);
         }
-     else if(text.substring(text.length()-3).equals("jpg"))
+     else if(text.length()>3 && text.substring(text.length()-3).equals("jpg"))
         {
             RelativeLayout layout=(RelativeLayout)findViewById(R.id.container);
             ImageView imageView=new ImageView(ChatActivity.this);
@@ -235,7 +237,7 @@ public class ChatActivity extends AppCompatActivity {
             msg.setMessage("Let me Google that for you - Click here");
                 msg.seturl(url);
             }
-            else if("<a href=".equals(text.substring(0,8)))
+            else if(text.length()>9 && "<a href=".equals(text.substring(0,8)))
             {
                 int index1=text.indexOf(">");
                 int index2=text.lastIndexOf(">");
@@ -243,6 +245,13 @@ public class ChatActivity extends AppCompatActivity {
                 Log.e("index",text+" "+index1+" "+index2+" "+i3);
                 String ans=text.substring(index1+1,i3)+text.substring(index2+1);
                 msg.setMessage(""+ans);
+            }
+            else if(text.equals("101"))
+            {
+                msg.setMessage("Opening Quiz Game");
+                msg.setDate(DateFormat.getDateTimeInstance().format(new Date()));
+
+                startActivity(new Intent(this,GameInitActivity.class));
             }
             else
             msg.setMessage(text);
