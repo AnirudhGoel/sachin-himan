@@ -7,7 +7,7 @@ import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -146,7 +146,7 @@ public class ChatActivity extends AppCompatActivity {
         String text_result="";
         //by network call take the sstring
 
-
+        Log.e("sachin",message);
 
         Call<Question> call= ApiClientChatbot.getInterface().getAnswer(message);
         mView.show(getSupportFragmentManager(), "");
@@ -242,7 +242,7 @@ public class ChatActivity extends AppCompatActivity {
                 int index1=text.indexOf(">");
                 int index2=text.lastIndexOf(">");
                 int i3=text.lastIndexOf("</a");
-
+                Log.e("index",text+" "+index1+" "+index2+" "+i3);
                 String ans=text.substring(index1+1,i3)+text.substring(index2+1);
                 msg.setMessage(""+ans);
             }
