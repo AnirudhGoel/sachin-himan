@@ -14,7 +14,7 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -162,7 +162,7 @@ public class QuestionActivity extends Activity {
 
         @Override
         public void onFinish() {
-            Log.e("1","1");
+
             times.setText("Time is up");
             Intent intent = new Intent(QuestionActivity.this,
                     AnswerActivity.class);
