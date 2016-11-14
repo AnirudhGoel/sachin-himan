@@ -1,6 +1,6 @@
 package com.codingblocks.customnavigationdrawer.Networking;
 
-
+import com.codingblocks.customnavigationdrawer.ApiInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -20,7 +20,7 @@ public class ApiClientChatbot {
             //.create();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://edu-chatbot.herokuapp.com/")
+                    .baseUrl("https://code-and-counter.herokuapp.com/")
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
 
