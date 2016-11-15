@@ -28,6 +28,7 @@ public class SplashScreen extends AppCompatActivity {
         {
             finish();
             Intent intent = new Intent(this, ChatActivity.class);
+            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             startActivity(intent);
 
 

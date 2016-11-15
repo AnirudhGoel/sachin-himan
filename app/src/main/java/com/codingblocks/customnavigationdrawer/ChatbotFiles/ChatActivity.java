@@ -13,17 +13,17 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
+
 import android.widget.Toast;
 
 import com.codingblocks.customnavigationdrawer.GamePart.GameInitActivity;
 import com.codingblocks.customnavigationdrawer.Networking.ApiClientChatbot;
 import com.codingblocks.customnavigationdrawer.R;
 import com.roger.catloadinglibrary.CatLoadingView;
-import com.squareup.picasso.Picasso;
+
 
 
 import java.text.DateFormat;
@@ -156,14 +156,14 @@ public class ChatActivity extends AppCompatActivity {
                 if(response.isSuccessful())
                 set_server_message(response.body().result.toString());
                 else
-                    Toast.makeText(ChatActivity.this,"Intenet not Connected",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ChatActivity.this,"Sorry Unexpected problem occured",Toast.LENGTH_LONG).show();
                 mView.dismiss();
             }
 
             @Override
             public void onFailure(Call<Question> call, Throwable t) {
 
-                Toast.makeText(ChatActivity.this,"Sorry Unexpected problem occured",Toast.LENGTH_LONG).show();
+                Toast.makeText(ChatActivity.this,"Please connect to Internet",Toast.LENGTH_LONG).show();
                 mView.dismiss();
 
 
