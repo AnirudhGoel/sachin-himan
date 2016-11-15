@@ -217,16 +217,7 @@ public class ChatActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(text));
             startActivity(intent);
         }
-     else if(text.length()>3 && text.substring(text.length()-3).equals("jpg"))
-        {
-            RelativeLayout layout=(RelativeLayout)findViewById(R.id.container);
-            ImageView imageView=new ImageView(ChatActivity.this);
-            imageView.setLayoutParams(new android.view.ViewGroup.LayoutParams(80,60));
-            imageView.setMaxHeight(20);
-            imageView.setMaxWidth(20);
-            Picasso.with(ChatActivity.this).load(text).into(imageView);
-            layout.addView(imageView);
-        }
+
         else
         {
             ChatMessage msg = new ChatMessage();

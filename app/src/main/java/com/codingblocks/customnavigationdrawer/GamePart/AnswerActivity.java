@@ -32,6 +32,8 @@ public class AnswerActivity extends Activity {
             case 1:texttype.setText("Wrong Answer !!");
                 break;
             case 2:texttype.setText("Sorry, Time up !!");
+                break;
+            case 3:texttype.setText("Game Finished !!");
 
         }
 

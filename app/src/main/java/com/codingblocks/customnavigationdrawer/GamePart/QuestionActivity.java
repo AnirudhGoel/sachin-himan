@@ -8,6 +8,8 @@ import java.util.concurrent.TimeUnit;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
@@ -26,6 +28,8 @@ public class QuestionActivity extends Activity {
     List<Question> quesList;
     int score = 0;
     int qid = 0;
+    long milibe4;
+
 
 
     Question currentQ;
@@ -107,6 +111,7 @@ public class QuestionActivity extends Activity {
             // if unlucky start activity and finish the game
 
             timer.cancel();
+            timer=null;
 
             Intent intent = new Intent(QuestionActivity.this,
                     AnswerActivity.class);
@@ -131,6 +136,8 @@ public class QuestionActivity extends Activity {
 
             // if over do this
             timer.cancel();
+            timer=null;
+
             finish();
             Intent intent = new Intent(QuestionActivity.this,
                     AnswerActivity.class);
@@ -163,7 +170,10 @@ public class QuestionActivity extends Activity {
         @Override
         public void onFinish() {
 
-            times.setText("Time is up");
+                timer.cancel();
+                timer=null;
+                times.setText("Time is up");
+
             Intent intent = new Intent(QuestionActivity.this,
                     AnswerActivity.class);
             Bundle b = new Bundle();
@@ -173,13 +183,16 @@ public class QuestionActivity extends Activity {
             startActivity(intent);
             finish();
 
+
+
         }
 
         @Override
         public void onTick(long millisUntilFinished) {
             // TODO Auto-generated method stub
 
-            long millis = millisUntilFinished;
+         long    millis = millisUntilFinished;
+            milibe4=millisUntilFinished;
             String hms = String.format(
                     "%02d:%02d:%02d",
                     TimeUnit.MILLISECONDS.toHours(millis),
@@ -196,6 +209,7 @@ public class QuestionActivity extends Activity {
 
     }
 
+
     private void setQuestionView() {
 
         // the method which will put all things together
@@ -207,6 +221,43 @@ public class QuestionActivity extends Activity {
         qid++;
     }
 
+    @Override
+    protected void onPause() {
 
+        if(timer!=null)
+        {
+            timer.cancel();
+            timer=null;
+
+        }
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        if(timer==null)
+        {
+        timer=new CounterClass(milibe4,1000);
+            timer.start();
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (timer!=null)
+        timer.cancel();
+        timer=null;
+        finish();
+        Intent intent = new Intent(QuestionActivity.this,
+                AnswerActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("score", score);// Your score
+        b.putInt("type",3);  //0 denotes questions finished
+        intent.putExtras(b); // Put your score to your next
+        startActivity(intent);
+        super.onBackPressed();
+    }
 }
 
