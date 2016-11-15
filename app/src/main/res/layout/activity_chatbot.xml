@@ -13,11 +13,9 @@
 
         <EditText
             android:id="@+id/messageEdit"
-            android:layout_width="wrap_content"
-            android:maxWidth="400dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-
             android:autoText="true"
             android:hint="Type your Question......" />
 
