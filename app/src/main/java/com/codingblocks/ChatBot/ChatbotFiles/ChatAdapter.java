@@ -1,4 +1,4 @@
-package com.codingblocks.customnavigationdrawer.ChatbotFiles;
+package com.codingblocks.ChatBot.ChatbotFiles;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.codingblocks.customnavigationdrawer.Initial;
+package com.codingblocks.ChatBot.Initial;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,12 +7,10 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.transition.Fade;
-import android.transition.TransitionManager;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.codingblocks.customnavigationdrawer.ChatbotFiles.ChatActivity;
+import com.codingblocks.ChatBot.ChatbotFiles.ChatActivity;
 import com.codingblocks.customnavigationdrawer.R;
 
 

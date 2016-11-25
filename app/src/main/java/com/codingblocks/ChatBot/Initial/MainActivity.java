@@ -1,4 +1,4 @@
-package com.codingblocks.customnavigationdrawer.Initial;
+package com.codingblocks.ChatBot.Initial;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,11 +19,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.codingblocks.customnavigationdrawer.ChatbotFiles.ChatActivity;
+import com.codingblocks.ChatBot.ChatbotFiles.ChatActivity;
 import com.codingblocks.customnavigationdrawer.R;
 
-import static android.R.attr.windowBackground;
-import static com.codingblocks.customnavigationdrawer.R.color.navigationBarColor;
 import static com.codingblocks.customnavigationdrawer.R.color.white;
 
 
@@ -198,8 +196,6 @@ public class MainActivity extends AppCompatActivity {
             //layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             //View view = layoutInflater.inflate(layouts[position], container, false);
-
-
 
         }
 

@@ -1,4 +1,4 @@
-package com.codingblocks.customnavigationdrawer.ChatbotFiles;
+package com.codingblocks.ChatBot.ChatbotFiles;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -13,17 +13,14 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.codingblocks.customnavigationdrawer.GamePart.GameInitActivity;
-import com.codingblocks.customnavigationdrawer.Networking.ApiClientChatbot;
+import com.codingblocks.ChatBot.Networking.ApiClientChatbot;
+import com.codingblocks.ChatBot.GamePart.GameInitActivity;
 import com.codingblocks.customnavigationdrawer.R;
 import com.roger.catloadinglibrary.CatLoadingView;
-import com.squareup.picasso.Picasso;
 
 
 import java.text.DateFormat;

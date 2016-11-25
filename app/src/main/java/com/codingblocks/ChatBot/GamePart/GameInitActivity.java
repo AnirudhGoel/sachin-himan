@@ -1,4 +1,4 @@
-package com.codingblocks.customnavigationdrawer.GamePart;
+package com.codingblocks.ChatBot.GamePart;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

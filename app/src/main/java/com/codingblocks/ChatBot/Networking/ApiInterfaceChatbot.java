@@ -1,6 +1,6 @@
-package com.codingblocks.customnavigationdrawer.Networking;
+package com.codingblocks.ChatBot.Networking;
 
-import com.codingblocks.customnavigationdrawer.ChatbotFiles.Question;
+import com.codingblocks.ChatBot.ChatbotFiles.Question;
 
 
 import retrofit2.Call;

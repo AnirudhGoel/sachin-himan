@@ -1,4 +1,4 @@
-package com.codingblocks.customnavigationdrawer.GamePart;
+package com.codingblocks.ChatBot.GamePart;
 
 /**
  * Created by Sachin on 11/13/2016.
